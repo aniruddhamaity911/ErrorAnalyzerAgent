@@ -4,60 +4,20 @@ This file contain methods that's extract ERROR logs from
 passed log file and store it in vector store
 """
 
-import os
-from dotenv import load_dotenv
 import re
-from Error import ErrorLog
-load_dotenv()
-
-LOG_FILE_PATH = "D:\\DataEngineer\\trace-insight\\ErrorAnalyzerAgent\\resources\\enterprise-payment-service.log"
-LOG_START_PATTERN = "LOG_START_PATTERN"
-DATE_FIELD="DATE_FIELD"
-TIME_FIELD="TIME_FIELD"
-LOG_LEVEL="LOG_LEVEL"
-LOG_MESSAGE="LOG_MESSAGE"
-
-
-def get_required_env() -> dict:
-    """
-    Returns the value of the required environment variable.
-    Raises an exception if it is not set.
-    """
-    value = os.getenv(LOG_START_PATTERN)
-    if not value:
-        raise ValueError(
-            f"Required environment variable '{LOG_START_PATTERN}' is not set in the .env file."
-        )
-    date_field = os.getenv(DATE_FIELD)
-    if not date_field:
-        raise ValueError(f"Required environment variable '{DATE_FIELD}' is not set in the .env file.")
-
-    time_field = os.getenv(TIME_FIELD)
-    if not time_field:
-        raise ValueError(f"Required environment variable '{TIME_FIELD}' is not set in the .env file.")
-
-    log_level_field = os.getenv(LOG_LEVEL)
-    if not log_level_field:
-        raise ValueError(f"Required environment variable '{LOG_LEVEL}' is not set in the .env file.")
-
-    log_message_field = os.getenv(LOG_MESSAGE)
-    if not log_message_field:
-        raise ValueError(f"Required environment variable '{LOG_MESSAGE}' is not set in the .env file.")
-
-    return {"LOG_START_PATTERN": value, "DATE_FIELD": int(date_field), "TIME_FIELD": int(time_field),
-            "LOG_LEVEL": int(log_level_field), "LOG_MESSAGE": int(log_message_field)}
-
-
+from models import ErrorLog
+from config import get_required_env
+import const
 def extract_error_logs(log_file_path: str):
     """
     Extracts complete ERROR log blocks, including stack traces.
     """
     environment_vars = get_required_env()
-    pattern = environment_vars.get(LOG_START_PATTERN)
-    date_field = environment_vars.get(DATE_FIELD)
-    time_field = environment_vars.get(TIME_FIELD)
-    log_level_field = environment_vars.get(LOG_LEVEL)
-    log_message_field = environment_vars.get(LOG_MESSAGE)
+    pattern = environment_vars.get(const.LOG_START_PATTERN)
+    date_field = environment_vars.get(const.DATE_FIELD)
+    time_field = environment_vars.get(const.TIME_FIELD)
+    log_level_field = environment_vars.get(const.LOG_LEVEL)
+    log_message_field = environment_vars.get(const.LOG_MESSAGE)
     if not isinstance(pattern, str):
         raise TypeError("pattern must be a string")
     if not isinstance(date_field, int):
@@ -91,7 +51,7 @@ def extract_error_logs(log_file_path: str):
                             timestamp=current_timestamp,
                             level=current_level,
                             message=current_message,
-                            raw_error="".join(current_error)
+                            raw_error=re.sub(r"\s+", " ","".join(current_error))
                         )
                     )
                     capturing = False
@@ -132,6 +92,3 @@ def extract_error_logs(log_file_path: str):
 
 
 
-if __name__ == "__main__":
-    print(LOG_START_PATTERN)
-    print(extract_error_logs(LOG_FILE_PATH)[0])
