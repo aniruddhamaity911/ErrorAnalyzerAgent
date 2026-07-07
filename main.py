@@ -5,5 +5,5 @@ if __name__ == "__main__":
     print("starting")
     vector_store = VectorStore()
     errors = extract_error_logs(LOG_FILE_PATH)
-    vector_store.save_errors(errors[:2])
+    vector_store.save_errors(errors[:4])
     print("saving completed")

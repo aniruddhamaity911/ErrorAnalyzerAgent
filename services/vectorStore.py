@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from langchain_mongodb import MongoDBAtlasVectorSearch
 
 from config import get_required_env
@@ -61,6 +63,7 @@ class VectorStore:
                         "timestamp": error.timestamp,
                         "level": error.level,
                         "message": error.message,
+                        "createdAt": datetime.now(timezone.utc),
                     },
                 )
             )
@@ -68,6 +71,11 @@ class VectorStore:
         self.vector_store.add_documents(documents)
 
         print(f"Inserted {len(documents)} error documents.")
+    def search(self, query: str, k: int = 3) -> list[Document]:
+        return self.vector_store.similarity_search(
+            query=query,
+            k=k
+        )
 
 
 
