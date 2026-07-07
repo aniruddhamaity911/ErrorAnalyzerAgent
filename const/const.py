@@ -1,4 +1,3 @@
-from config import get_required_env
 LOG_FILE_PATH = "D:\\DataEngineer\\trace-insight\\ErrorAnalyzerAgent\\resources\\enterprise-payment-service.log"
 LOG_START_PATTERN = "LOG_START_PATTERN"
 DATE_FIELD="DATE_FIELD"
@@ -11,4 +10,3 @@ MONGODB_COLLECTION="MONGODB_COLLECTION"
 EMBEDDING_MODEL="EMBEDDING_MODEL"
 LLM_MODEL="LLM_MODEL"
 VECTOR_SEARCH_INDEX="VECTOR_SEARCH_INDEX"
-ENVIRONMENT_VARIABLE=get_required_env()

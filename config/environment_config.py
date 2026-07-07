@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 import os
+
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+
 import const
 from typing import Dict,Any
 load_dotenv()
@@ -72,3 +75,9 @@ def get_required_env() -> Dict[str, str]:
             LOG_LEVEL: log_level_field, LOG_MESSAGE: log_message_field,
             MONGODB_URI: mongodb_uri, MONGODB_DB: mongodb_db, MONGODB_COLLECTION: mongodb_collection,
             LLM_MODEL: llm_model, EMBEDDING_MODEL: embedding_model, VECTOR_SEARCH_INDEX: vector_search_index}
+
+
+
+
+embedder = OpenAIEmbeddings(model=get_required_env().get(EMBEDDING_MODEL, "default"))
+llm = ChatOpenAI(model=get_required_env().get(LLM_MODEL, "gpt-4o-mini"))
