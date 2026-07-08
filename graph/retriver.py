@@ -18,3 +18,12 @@ def retrieve_error_logs(state:GraphState)->Dict[str,Any]:
     )
     print("<======== Retrieval completed ========>")
     return {"documents": documents}
+
+
+
+
+if __name__ == "__main__":
+    state = {"question":"Payment already processed "}
+    docs  =retrieve_error_logs(state)
+
+    print("completed")

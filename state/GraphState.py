@@ -9,10 +9,12 @@ class GraphState(TypedDict):
     Stores
     question,
     iteration_count,
-    documents
+    error_log
+    web_documents
     answer
     """
     question: str
     iteration_count: int
-    documents: list[Document]
+    error_log: list[Document]
+    web_documents: list[Document]
     answer: str
