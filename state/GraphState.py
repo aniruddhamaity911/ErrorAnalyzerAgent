@@ -16,5 +16,6 @@ class GraphState(TypedDict):
     question: str
     iteration_count: int
     error_log: list[Document]
+    web_query: str
     web_documents: list[Document]
     answer: str

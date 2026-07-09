@@ -12,10 +12,11 @@ Your task is to determine whether the retrieved logs contain enough information 
 
 Rules:
 1. Read the user's question carefully.
-2. Analyze the retrieved logs.
-3. Decide whether the logs are sufficient to determine the root cause and provide a meaningful answer.
+2. Analyze the retrieved logs. 
+4. Decide whether the logs are sufficient to determine 
+the Error contains keyword(s) or semantic meaning related to the question and the root cause and provide a meaningful answer.
 4. If the logs are sufficient, set score=True.
-5. If the logs are NOT sufficient, set score=False and generate a concise web search query that is likely to find the missing information.
+5. If the logs are NOT sufficient, set score=False.
 6. Do not answer the user's question.
 7. Do not explain your reasoning.
 8. Return only the structured output.
@@ -29,11 +30,6 @@ class DocumentGrade(BaseModel):
 
     score: bool = Field(
         description="True if the retrieved logs are sufficient to answer the user's question."
-    )
-
-    web_query: Optional[str] = Field(
-        default=None,
-        description="A search query to use when score=False. Otherwise null."
     )
 
 
