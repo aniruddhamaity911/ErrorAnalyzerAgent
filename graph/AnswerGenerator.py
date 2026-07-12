@@ -13,5 +13,5 @@ def answer_generator(state:GraphState)->Dict[str,Any]:
     print("<======generating answer======>")
     question = state['question']
     errors = state['error_log']
-    answer = generation_chain.invoke({"question":question,"document":errors})
+    answer = generation_chain.invoke({"question":question,"context":errors})
     return {"answer":answer}

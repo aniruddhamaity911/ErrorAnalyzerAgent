@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from langchain_mongodb import MongoDBAtlasVectorSearch
-
+import re
 from config import get_required_env
 from pymongo import MongoClient
 from const import MONGODB_URI, MONGODB_DB, MONGODB_COLLECTION, EMBEDDING_MODEL, VECTOR_SEARCH_INDEX
@@ -74,8 +74,67 @@ class VectorStore:
     def search(self, query: str, k: int = 3) -> list[Document]:
         return self.vector_store.similarity_search(
             query=query,
-            k=k
+            k=k,include_scores=True
         )
 
 
+    def deep_search(self, keywords: list[str]) -> list[Document]:
+        """
+        Search logs containing any of the supplied keywords.
 
+        Args:
+            keywords: List of keywords returned by the grader.
+
+        Returns:
+            List[Document]
+        """
+
+        if not keywords:
+            return []
+
+        regex_conditions = []
+        unique_keywords = list(set(keywords))
+        for keyword in unique_keywords:
+            regex = {
+                "$regex": re.escape(keyword),
+                "$options": "i"  # Case-insensitive
+            }
+
+            regex_conditions.extend([
+                {"message": regex},
+                {"text": regex}
+            ])
+
+        cursor = self.vector_store.collection.find(
+            {
+                "$or": regex_conditions
+            }
+        )
+
+        documents = []
+
+        for doc in cursor:
+            documents.append(
+                Document(
+                    page_content=doc["text"],
+                    metadata={
+                        "_id": str(doc["_id"]),
+                        "timestamp": doc.get("timestamp"),
+                        "level": doc.get("level"),
+                        "message": doc.get("message"),
+                        "createdAt": doc.get("createdAt"),
+                    },
+                )
+            )
+
+        return documents
+
+
+
+if __name__ == "__main__":
+    vector_store = VectorStore()
+    docs = vector_store.deep_search(["REQ-9011948"])
+
+    for doc in docs:
+        print(doc.page_content)
+        print("=" * 80)

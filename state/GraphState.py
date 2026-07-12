@@ -10,12 +10,11 @@ class GraphState(TypedDict):
     question,
     iteration_count,
     error_log
-    web_documents
+    missing_keys
     answer
     """
     question: str
     iteration_count: int
     error_log: list[Document]
-    web_query: str
-    web_documents: list[Document]
+    missing_keys: list[str]
     answer: str

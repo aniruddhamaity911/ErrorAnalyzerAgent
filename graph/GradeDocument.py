@@ -18,14 +18,18 @@ def grade_document(state:GraphState)->Dict[str,Any]:
     question = state["question"]
     documents = state["error_log"]
     final_documents = []
+    missing_keys = state.get("missing_keys",[])
     print("<=====grading the error log=====>")
     for doc in documents:
         content = doc.page_content
         score = document_grader.retrieve_grade.invoke({"question": question, "document": content})
         if score.score:
             final_documents.append(doc)
+        else:
+            missing_keys.append(score.missing_keyWords)
     if len(final_documents) == 0:
         final_documents.append(Document(page_content="There is no valid log present.Do not analyze further.reply user that no error found"
                                                      "please check the question or provide sufficient more details"))
     print("<=====grading the error log completed=====>")
-    return {"error_log": final_documents}
+    print("missing keywords:", missing_keys)
+    return {"error_log": final_documents,"missing_keys":missing_keys}

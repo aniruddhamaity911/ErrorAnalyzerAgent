@@ -14,16 +14,17 @@ def retrieve_error_logs(state:GraphState)->Dict[str,Any]:
     print("<======== Retrieving error logs ========>")
     documents = vector_store.search(
         query=question,
-        k=5
+        k=5,
     )
     print("<======== Retrieval completed ========>")
-    return {"documents": documents}
+    return {"error_log": documents}
 
 
 
 
 if __name__ == "__main__":
-    state = {"question":"Payment already processed "}
-    docs  =retrieve_error_logs(state)
-
+    state = {"question":"REQ-9009802"}
+    docs  =retrieve_error_logs(state,)
+    for doc in docs:
+        print(doc)
     print("completed")
