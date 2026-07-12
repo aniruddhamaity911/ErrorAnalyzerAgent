@@ -1,8 +1,18 @@
+from typing import Dict, Any
+
 from langgraph.constants import END
 from langgraph.graph import StateGraph
 
 from state import GraphState
 from graph import answer_generator, grade_document, retrieve_error_logs
+
+"""
+define conditional flow
+if the error_logs in state is empty
+then deep search 
+"""
+def conditional_flow(state:GraphState)->Dict[str,Any]:
+    return {}
 
 workFlows = StateGraph(GraphState)
 workFlows.add_node("RETRIEVE",retrieve_error_logs)

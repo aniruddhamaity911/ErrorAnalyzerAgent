@@ -20,6 +20,18 @@ def retrieve_error_logs(state:GraphState)->Dict[str,Any]:
     return {"error_log": documents}
 
 
+def deep_search(state:GraphState)->Dict[str,Any]:
+    """
+    from error DB
+    retrieve the error logs
+    which contain the keyword
+    in graph state's missing_keywords
+    :param state:
+    :return:
+    """
+    keywords = state["missing_keys"]
+    documents = vector_store.deep_search(keywords)
+    return {"error_log": documents}
 
 
 if __name__ == "__main__":
