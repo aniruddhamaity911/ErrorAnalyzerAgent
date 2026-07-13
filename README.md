@@ -1,12 +1,15 @@
-# Trace Insight
+# Error Analyzer RAG
 
 ## Overview
 
-Trace Insight is an AI-powered production log analysis system.
+Error Analyzer is an AI-powered production log analysis system.
 
 It helps engineers investigate application failures using natural language.
 
-The system stores production error logs in MongoDB Atlas Vector Search. It retrieves the most relevant logs using semantic search. If the retrieved logs are not sufficient, it performs an additional keyword-based search to fetch missing log entries. Finally, it generates an answer based on the complete log context.
+The system stores production error logs in MongoDB Atlas Vector Search. It retrieves the most relevant logs using semantic search.
+If the retrieved logs are not sufficient, 
+it performs an additional keyword-based search to fetch missing log entries. 
+Finally, it generates an answer based on the complete log context.
 
 The goal is to reduce manual log investigation and provide faster root cause analysis.
 
