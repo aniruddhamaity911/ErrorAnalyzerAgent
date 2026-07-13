@@ -152,12 +152,6 @@ Typical configuration includes:
 
 ## Future Improvements
 
-* Support multiple log sources.
-* Support OpenSearch and Elasticsearch.
-* Add hybrid retrieval.
-* Improve keyword extraction.
-* Add request timeline reconstruction.
-* Support streaming responses.
-* Add conversation memory.
-
+- Improve keyword extraction for more accurate deep log retrieval.
+- Integrate the application source code into the knowledge base to enable code-aware root cause analysis.
 ---
