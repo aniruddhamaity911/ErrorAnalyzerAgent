@@ -92,6 +92,7 @@ class VectorStore:
         if not keywords:
             return []
 
+        print(keywords)
         regex_conditions = []
         unique_keywords = list(set(keywords))
         for keyword in unique_keywords:

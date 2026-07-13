@@ -26,7 +26,7 @@ def grade_document(state:GraphState)->Dict[str,Any]:
         if score.score:
             final_documents.append(doc)
         else:
-            missing_keys.append(score.missing_keyWords)
+            missing_keys.extend(score.missing_keyWords)
     if len(final_documents) == 0:
         final_documents.append(Document(page_content="There is no valid log present.Do not analyze further.reply user that no error found"
                                                      "please check the question or provide sufficient more details"))

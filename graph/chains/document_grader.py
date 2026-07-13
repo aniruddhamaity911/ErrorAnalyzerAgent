@@ -37,10 +37,6 @@ Rules:
    - Barcode IDs
    - File names
    - Service names
-   - Error messages
-   - Exception names
-   - SQL table names
-   - API names
 
 7. Do NOT invent new keywords.
 8. Do NOT explain your reasoning.

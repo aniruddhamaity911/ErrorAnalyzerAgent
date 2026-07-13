@@ -29,14 +29,18 @@ def deep_search(state:GraphState)->Dict[str,Any]:
     :param state:
     :return:
     """
+    print("<======deep searching======>")
     keywords = state["missing_keys"]
-    documents = vector_store.deep_search(keywords)
-    return {"error_log": documents}
+    documents = state.get("error_log",[])
+    print(f"Before deep searching length of document list: {len(documents)}")
+    documents.extend(vector_store.deep_search(keywords))
+    print(f"After deep searching length of document list: {len(documents)}")
+    return {"error_log": documents,"missing_keys":[]}
 
 
 if __name__ == "__main__":
     state = {"question":"REQ-9009802"}
-    docs  =retrieve_error_logs(state,)
+    docs  = retrieve_error_logs(state,)
     for doc in docs:
         print(doc)
     print("completed")
